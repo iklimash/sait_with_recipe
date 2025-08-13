@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--light), #dfe6e9);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            z-index: 10;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: #636e72;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            margin-left: 1rem;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50%;
+            max-width: 600px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(20px); }
+        }
+        
+        .features {
+            padding: 8rem 5%;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 5rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 8rem;
+                height: auto;
+            }
+            
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+            
+            .hero-image {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                width: 100%;
+                margin-top: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">Волшебный Мир | {{ title }}</a>
+            <div class="nav-links">
+                <a href="">Главная</a>
+                <a href="/about/" > О нас </a>
+                <a href="{% url 'catalog' %}">Рецепты</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Откройте дверь в мир возможностей</h1>
+            <div class="hero-buttons">
+                <a href="{% url 'catalog' %}" class="btn">Начать</a>
+                <a href="{% url 'about' %}" class="btn btn-outline">Узнать больше</a>
+            </div>
+        </div>
+        <img src="https://illustrations.popsy.co/amber/digital-nomad.svg" alt="Главное изображение" class="hero-image">
+    </section>
+
+    <section class="features">
+        <h2 class="section-title">Наши преимущества</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Быстрая разработка</h3>
+                <p>Используем современные технологии для ускорения процесса создания продуктов.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>Креативный дизайн</h3>
+                <p>Уникальные интерфейсы, которые запоминаются и улучшают пользовательский опыт.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Безопасность</h3>
+                <p>Приоритет - защита ваших данных и конфиденциальность пользователей.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Главная</a>
+            <a href="/about/">О нас</a>
+            <a href="/catalog/">Рецепты</a>
+
+        </div>
+        <p>© 2025 Волшебный Мир. Все права защищены.</p>
+    </footer>
+
+    <script>
+        // Плавная прокрутка для якорных ссылок
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Анимация при загрузке
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

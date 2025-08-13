@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--light), #dfe6e9);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 40px;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Стили для рецептов */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: var(--dark);
+        }
+
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .recipe-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+        }
+
+        .game-badge {
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: var(--warning);
+            color: var(--dark);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .recipe-header h2 {
+            font-size: 1.4rem;
+            margin-top: 5px;
+        }
+
+        .recipe-content {
+            padding: 1.5rem;
+        }
+
+        .ingredients h3, .recipe-effects h3, .preparation h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .ingredients ul {
+            list-style-type: none;
+            margin-bottom: 1.2rem;
+        }
+
+        .ingredients li {
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .recipe-effects p {
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        .recipe-footer {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+
+        .preparation p {
+            font-style: italic;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                margin-top: 1rem;
+            }
+            
+            .container {
+                padding-top: 140px;
+            }
+            
+            .recipes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}" class="logo">Игровые рецепты | {{ title }}</a>
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Главная</a>
+                <a href="{% url 'about' %}">О нас</a>
+                <a href="{% url 'catalog' %}">Рецепты</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Политика конфиденциальности</a>
+            <a href="#">Условия использования</a>
+        </div>
+        <p>© 2023 Игровые рецепты. Все права защищены.</p>
+    </footer>
+</body>
+</html>
