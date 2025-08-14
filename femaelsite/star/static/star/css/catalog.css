@@ -1,0 +1,51 @@
+.details-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 15px;
+    }
+
+    .game-badge {
+        display: inline-block;
+        background: var(--warning);
+        color: var(--dark);
+        padding: 2px 10px;
+        border-radius: 13px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-top: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .game-badge:hover {
+        background: var(--danger);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .recipe-header {
+        padding: 1.5rem;
+        text-align: center;
+    }
+    
+    .recipe-header h2 {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 576px) {
+        .game-badge {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+        }
+    }
