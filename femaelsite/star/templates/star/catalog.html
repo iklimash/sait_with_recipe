@@ -3,13 +3,29 @@
 {% block content %}
 <section class="recipes-section">
     <link type="text/css" href="{% static 'star/css/catalog.css' %}" rel="stylesheet">
-    <h1 class="section-title">Лучшие рецепты</h1>
+    
+    <!-- Добавляем блок с кнопками категорий -->
+    <div class="category-filter">
+        <div class="category-buttons">
+            <a href="{% url 'all_recipes' %}" class="category-btn {% if not cat_selected %}active{% endif %}">
+                Все рецепты
+            </a>
+
+            {% for category in categories %}
+            <a href="{{ category.get_absolute_url }}" 
+                class="category-btn {% if category.pk == cat_selected %}active{% endif %}">
+                {{ category.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
     
     <div class="recipes-grid">
         {% for recipe in recipes %}
         <div class="recipe-card">
             <div class="recipe-header">
                 <h2>{{ recipe.title }}</h2>
+                
                 <span class="game-badge">{{ recipe.game }}</span>
             </div>
             
@@ -31,7 +47,7 @@
             
             <div class="recipe-footer">
                 <div class="preparation">
-                    <h3 >Способ приготовления:</h3>
+                    <h3>Способ приготовления:</h3>
                     <p>{{ recipe.preparation }}</p>
                     <a href="{{ recipe.get_absolute_url }}" class="details-btn">
                         <span>Подробнее</span>
@@ -46,5 +62,40 @@
     </div>
 </section>
 
+<style>
 
+    /* Добавляем стили для кнопок категорий */
+    .category-filter {
+        margin-bottom: 30px;
+    }
+
+    
+    .category-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    
+    .category-btn {
+        padding: 8px 16px;
+        background: #f3f3f3;
+        border-radius: 20px;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        border: 1px solid #ddd;
+    }
+    
+    .category-btn:hover {
+        background: #e0e0e0;
+    }
+    
+    .category-btn.active {
+        background: #6c5ce7;
+        color: white;
+        border-color: #6c5ce7;
+    }
+</style>
 {% endblock %}

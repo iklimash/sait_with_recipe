@@ -4,11 +4,12 @@
 {% block content %}
 <section class="recipe-detail-section">
     <link type="text/css" href="{% static 'star/css/recipe.css' %}" rel="stylesheet">
+
     
     <div class="recipe-card detailed">
         <div class="recipe-header">
             <h1>{{ recipe.title }}</h1>
-            <span class="game-badge">{{ recipe.game }}</span>
+            <span class="recipe-game-badge">{{ recipe.game }}</span>
         </div>
         
         <div class="recipe-content">
@@ -40,4 +41,20 @@
         </a>
     </div>
 </section>
+
+<style>
+
+    .recipe-game-badge{
+        display: inline-block;
+        background: var(--warning);
+        color: var(--dark);
+        padding: 4px 15px;
+        border-radius: 13px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-top: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+</style>
 {% endblock %}

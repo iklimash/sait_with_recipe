@@ -34,34 +34,34 @@ def show_recipe(request, recipe_slug):
 
 def catalog(request):
     recipes = recipe.objects.all()  
+    categories = Category.objects.all()
     context = {
         'recipes': recipes,
-        'title': 'Каталог рецептов'  # Жёстко заданный заголовок
+        'categories': categories,
+        'cat_selected': None,
+        'title': 'Лучшие рецепты'
     }
     return render(request, 'star/catalog.html', context)
 
 def show_category(request, cat_slug):
-
-    category = get_object_or_404(Category, slug = cat_slug)
-    recipes = recipe.objects.filter(category=category)
-
-    recipe_data ={
-            'id': category.id,
-            'title': f'Рубрика:{category.name}',
-            'game': category.game,
-            'ingredients': category.ingredients,  
-            'effect': category.effect,
-            'preparation': category.preparation,
-            'cat_selected': category.pk,
-    }
+    category = get_object_or_404(Category, slug=cat_slug)
+    recipes = recipe.objects.filter(cat=category)
     context = {
-        'recipe': recipe_data,
-        'recipes': recipes,  
-        'title': category.title,
+        'recipes': recipes,
         'categories': Category.objects.all(),
+        'cat_selected': category.pk,
+        'title': f'Рубрика: {category.name}',
     }
+    return render(request, 'star/catalog.html', context)
 
-    return render(request, 'star/category.html', context)
+def all_recipes(request):
+    recipes = recipe.objects.all()
+    return render(request, 'star/catalog.html', {
+        'recipes': recipes,
+        'categories': Category.objects.all(),
+        'cat_selected': None,
+        'title': 'Лучшие рецепты'
+    })
 
 def add_page(request):
     return HttpResponse(f'Отображение рецептов с id')
