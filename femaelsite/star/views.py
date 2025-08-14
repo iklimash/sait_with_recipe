@@ -14,39 +14,30 @@ def index(request):
 def about(request):
     return render(request, 'star/about.html', { 'title': 'О нас'})
 
-def show_recipe(request, recipe_id):
-    recipe_obj  = get_object_or_404(recipe, pk = recipe_id)
+def show_recipe(request, recipe_slug):
+    recipe_obj  = get_object_or_404(recipe, slug = recipe_slug)
 
     recipe_data ={
-        'id': recipe_obj .id,
-            'title': recipe_obj .title,
-            'game': recipe_obj .game,
-            'ingredients': recipe_obj .ingredients,  
-            'effect': recipe_obj .effect,
-            'preparation': recipe_obj.preparation
+            'id': recipe_obj.id,
+            'title': recipe_obj.title,
+            'game': recipe_obj.game,
+            'ingredients': recipe_obj.ingredients,  
+            'effect': recipe_obj.effect,
+            'preparation': recipe_obj.preparation,
     }
-            
-    return render(request, 'star/recipe.html', {'recipe': recipe_data})
+    context = {
+        'recipe': recipe_data,
+        'title': recipe_obj.title,  # Add this line
+    }
+    return render(request, 'star/recipe.html', context)
 
 def catalog(request):
-
-    recipes_queryset = recipe.objects.all()
-    
-    recipes_data = [
-        {
-            'id': recipe.id,
-            'title': recipe.title,
-            'game': recipe.game,
-            'ingredients': recipe.ingredients,  
-            'effect': recipe.effect,
-            'preparation': recipe.preparation
-        }
-        for recipe in recipes_queryset
-    ]
-    return render(request, 'star/catalog.html', {
-        'title': 'Рецепты',
-        'recipes': recipes_data
-    })
+    recipes = recipe.objects.all()  
+    context = {
+        'recipes': recipes,
+        'title': 'Каталог рецептов'  # Жёстко заданный заголовок
+    }
+    return render(request, 'star/catalog.html', context)
 
 def add_page(request):
     return HttpResponse(f'Отображение рецептов с id')
