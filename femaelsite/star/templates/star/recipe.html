@@ -1,0 +1,43 @@
+{% extends 'star/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="recipe-detail-section">
+    <link type="text/css" href="{% static 'star/css/recipe.css' %}" rel="stylesheet">
+    
+    <div class="recipe-card detailed">
+        <div class="recipe-header">
+            <h1>{{ recipe.title }}</h1>
+            <span class="game-badge">{{ recipe.game }}</span>
+        </div>
+        
+        <div class="recipe-content">
+            <div class="ingredients">
+                <h2>Ингредиенты:</h2>
+                <ul>
+                    {% for ingredient in recipe.ingredients %}
+                    <li>{{ ingredient }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="recipe-effects">
+                <h2>Эффект:</h2>
+                <p>{{ recipe.effect }}</p>
+            </div>
+            
+            <div class="preparation">
+                <h2>Способ приготовления:</h2>
+                <p>{{ recipe.preparation }}</p>
+            </div>
+        </div>
+        
+        <a href="{% url 'catalog' %}" class="back-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            <span>Назад к каталогу</span>
+        </a>
+    </div>
+</section>
+{% endblock %}
