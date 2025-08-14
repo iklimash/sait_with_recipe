@@ -72,5 +72,12 @@ def catalog(request):
         'recipes': recipes_data
     })
 
+def add_page(request):
+    return HttpResponse(f'Отображение рецептов с id')
+
+def login(request):
+    return HttpResponse(f'Отображение рецептов с id')
+
+
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
