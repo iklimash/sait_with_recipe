@@ -66,7 +66,14 @@ def all_recipes(request):
     })
 
 def add_page(request):
-    form = AddPostForm()
+
+    if request.method == "POST":
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = AddPostForm()
+
     data = {
         'title': 'Добавление рецепта',
         'form': form

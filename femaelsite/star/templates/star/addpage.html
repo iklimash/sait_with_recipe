@@ -6,7 +6,26 @@
 <h1>{{title}}</h1>
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <p><label for="form-label" for = "{{from.title.id_for_label}}">{{form.title.label}}</label>{{form.title}}</p>
+    <div class="form-error">{{form.title.errors}}</div>
+
+    <p><label for="form-label" for = "{{from.slug.id_for_label}}">{{form.slug.label}}</label>{{form.slug}}</p>
+    <div class="form-error">{{form.slug.errors}}</div>
+
+    <p><label for="form-label" for = "{{from.game.id_for_label}}">{{form.game.label}}</label>{{form.game}}</p>
+    <div class="form-error">{{form.game.errors}}</div>
+
+    <p><label for="form-label" for = "{{from.title.id_for_label}}">{{form.ingredients.label}}</label>{{form.ingredients}}</p>
+    <div class="form-error">{{form.ingredients.errors}}</div>
+
+    <p><label for="form-label" for = "{{from.effect.id_for_label}}">{{form.effect.label}}</label>{{form.effect}}</p>
+    <div class="form-error">{{form.effect.errors}}</div>
+
+    <p><label for="form-label" for = "{{from.preparation.id_for_label}}">{{form.preparation.label}}</label>{{form.preparation}}</p>
+    <div class="form-error">{{form.title.preparation}}</div>
+
+    <p><label for="form-label" for = "{{from.cat.id_for_label}}">{{form.cat.label}}</label>{{form.cat}}</p>
+    <div class="form-error">{{form.cat.errors}}</div>
     <p><button type="submit">Отправить</button></p>
 </form>
 {% endblock %}
