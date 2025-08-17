@@ -2,30 +2,48 @@
 {% load static %}
 
 {% block content %}
-<link type="text/css" href="{% static 'star/css/recipe.css' %}" rel="stylesheet">
-<h1>{{title}}</h1>
+<link type="text/css" href="{% static 'star/css/addpage.css' %}" rel="stylesheet">
+
 <form action="" method="post">
     {% csrf_token %}
-    <p><label for="form-label" for = "{{from.title.id_for_label}}">{{form.title.label}}</label>{{form.title}}</p>
-    <div class="form-error">{{form.title.errors}}</div>
-
-    <p><label for="form-label" for = "{{from.slug.id_for_label}}">{{form.slug.label}}</label>{{form.slug}}</p>
-    <div class="form-error">{{form.slug.errors}}</div>
-
-    <p><label for="form-label" for = "{{from.game.id_for_label}}">{{form.game.label}}</label>{{form.game}}</p>
-    <div class="form-error">{{form.game.errors}}</div>
-
-    <p><label for="form-label" for = "{{from.title.id_for_label}}">{{form.ingredients.label}}</label>{{form.ingredients}}</p>
-    <div class="form-error">{{form.ingredients.errors}}</div>
-
-    <p><label for="form-label" for = "{{from.effect.id_for_label}}">{{form.effect.label}}</label>{{form.effect}}</p>
-    <div class="form-error">{{form.effect.errors}}</div>
-
-    <p><label for="form-label" for = "{{from.preparation.id_for_label}}">{{form.preparation.label}}</label>{{form.preparation}}</p>
-    <div class="form-error">{{form.title.preparation}}</div>
-
-    <p><label for="form-label" for = "{{from.cat.id_for_label}}">{{form.cat.label}}</label>{{form.cat}}</p>
-    <div class="form-error">{{form.cat.errors}}</div>
-    <p><button type="submit">Отправить</button></p>
+    <div class="form-container">
+    <h2 class="form-title">Добавить рецепт</h2>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+        <div class="form-error">{{ form.title.errors }}</div>
+    </div>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.slug.id_for_label }}">{{ form.slug.label }}</label>
+        {{ form.slug }}
+        <div class="form-error">{{ form.slug.errors }}</div>
+    </div>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.game.id_for_label }}">{{ form.game.label }}</label>
+        {{ form.game }}
+        <div class="form-error">{{ form.game.errors }}</div>
+    </div>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.ingredients.id_for_label }}">{{ form.ingredients.label }}</label>
+        {{ form.ingredients }}
+        <div class="form-error">{{ form.ingredients.errors }}</div>
+    </div>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.effect.id_for_label }}">{{ form.effect.label }}</label>
+        {{ form.effect }}
+        <div class="form-error">{{ form.effect.errors }}</div>
+    </div>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.preparation.id_for_label }}">{{ form.preparation.label }}</label>
+        {{ form.preparation }}
+        <div class="form-error">{{ form.preparation.errors }}</div>
+    </div>
+    <div class="form-row">
+        <label class="form-label" for="{{ form.cat.id_for_label }}">{{ form.cat.label }}</label>
+        {{ form.cat }}
+        <div class="form-error">{{ form.cat.errors }}</div>
+    </div>
+    <button type="submit" class="form-submit">Отправить</button>
+</div>
 </form>
 {% endblock %}

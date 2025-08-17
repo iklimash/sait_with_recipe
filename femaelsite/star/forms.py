@@ -10,4 +10,4 @@ class AddPostForm(forms.Form):
     effect = forms.CharField(max_length = 255, label = "Эффект")
     preparation = forms.CharField(widget = forms.Textarea(), label = "Способ приготовления")
 
-    cat = forms.ModelChoiceField(queryset = Category.objects.all(), empty_label = "Не выбрано" ,label = "Категория")
+    cat = forms.ModelChoiceField(queryset = Category.objects.all(), empty_label = "Не выбрана" ,label = "Категория")
