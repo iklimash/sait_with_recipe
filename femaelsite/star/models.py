@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-
+# from django.template.defaultfilters import slugify
 
 class recipe(models.Model):
 
@@ -9,7 +9,7 @@ class recipe(models.Model):
     game = models.CharField(max_length = 255, verbose_name = 'Название игры')
     ingredients = models.JSONField(default =list, blank = True, verbose_name = 'Ингредиенты')
     effect = models.CharField(max_length = 255, verbose_name = 'Эффект')
-    preparation = models.CharField(max_length = 255, verbose_name = 'Способы приготовления')
+    preparation = models.CharField(max_length = 255, verbose_name = 'Способ приготовления')
 
     time_create = models.DateTimeField(auto_now_add = True, verbose_name = 'Время создания')
     time_update = models.DateTimeField(auto_now = True, verbose_name = 'Время изменение')
@@ -26,10 +26,18 @@ class recipe(models.Model):
     def get_absolute_url(self):
          return reverse('recipe', kwargs = {'recipe_slug' : self.slug})
     
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.title)
+    #     return super().save(*args, **kwargs)
+    
 class Category(models.Model):
 
-    name = models.CharField(max_length=255, db_index=True)
+    name = models.CharField(max_length=255, db_index=True, verbose_name = 'Категория')
     slug = models.SlugField(max_length=100, unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = 'Категории'
+        verbose_name_plural = 'Категории'
 
     def __str__(self):
         return self.name

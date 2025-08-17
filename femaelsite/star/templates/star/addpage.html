@@ -1,0 +1,12 @@
+{% extends 'star/base.html' %}
+{% load static %}
+
+{% block content %}
+<link type="text/css" href="{% static 'star/css/recipe.css' %}" rel="stylesheet">
+<h1>{{title}}</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p><button type="submit">Отправить</button></p>
+</form>
+{% endblock %}

@@ -3,13 +3,15 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.template.loader import render_to_string
 
+from .forms import AddPostForm
+
 from .models import Category, recipe
 
 
 def index(request):
     
-    data_index = { 'title': 'Главная страница'}
-    return render(request, 'star/index.html', data_index)
+    # data_index = { 'title': 'Главная страница'}
+    return render(request, 'star/index.html',  { 'title': 'Главная страница'})
 
 def about(request):
     return render(request, 'star/about.html', { 'title': 'О нас'})
@@ -64,11 +66,15 @@ def all_recipes(request):
     })
 
 def add_page(request):
-    return HttpResponse(f'Отображение рецептов с id')
+    form = AddPostForm()
+    data = {
+        'title': 'Добавление рецепта',
+        'form': form
+    }
+    return render(request, 'star/addpage.html', data)
 
 def login(request):
-    return HttpResponse(f'Отображение рецептов с id')
-
+    pass
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")
