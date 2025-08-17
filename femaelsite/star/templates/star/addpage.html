@@ -3,42 +3,44 @@
 
 {% block content %}
 <link type="text/css" href="{% static 'star/css/addpage.css' %}" rel="stylesheet">
-
+<body>
 <form action="" method="post">
     {% csrf_token %}
     <div class="form-container">
     <h2 class="form-title">Добавить рецепт</h2>
-    <div class="form-row">
+    <div class="form-row inline-row">
         <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
         {{ form.title }}
         <div class="form-error">{{ form.title.errors }}</div>
     </div>
-    <div class="form-row">
+    <div class="form-row inline-row">
         <label class="form-label" for="{{ form.slug.id_for_label }}">{{ form.slug.label }}</label>
         {{ form.slug }}
         <div class="form-error">{{ form.slug.errors }}</div>
     </div>
-    <div class="form-row">
+    <div class="form-row inline-row">
         <label class="form-label" for="{{ form.game.id_for_label }}">{{ form.game.label }}</label>
         {{ form.game }}
         <div class="form-error">{{ form.game.errors }}</div>
     </div>
-    <div class="form-row">
+    <div class="form-row inline-row">
         <label class="form-label" for="{{ form.ingredients.id_for_label }}">{{ form.ingredients.label }}</label>
         {{ form.ingredients }}
         <div class="form-error">{{ form.ingredients.errors }}</div>
     </div>
-    <div class="form-row">
+    <div class="form-row inline-row">
         <label class="form-label" for="{{ form.effect.id_for_label }}">{{ form.effect.label }}</label>
         {{ form.effect }}
         <div class="form-error">{{ form.effect.errors }}</div>
     </div>
-    <div class="form-row">
-        <label class="form-label" for="{{ form.preparation.id_for_label }}">{{ form.preparation.label }}</label>
+    <div class="form-row inline-row">
+        <label class="form-label" for="{{ form.preparation.id_for_label }}">
+            <span class="form-hint">Инструкция</span>
+        </label>
         {{ form.preparation }}
         <div class="form-error">{{ form.preparation.errors }}</div>
     </div>
-    <div class="form-row">
+    <div class="form-row inline-row">
         <label class="form-label" for="{{ form.cat.id_for_label }}">{{ form.cat.label }}</label>
         {{ form.cat }}
         <div class="form-error">{{ form.cat.errors }}</div>
@@ -46,4 +48,32 @@
     <button type="submit" class="form-submit">Отправить</button>
 </div>
 </form>
+<script>
+    // Добавляем классы при ошибках
+document.querySelectorAll('.form-control').forEach(input => {
+    input.addEventListener('blur', function() {
+        if (this.nextElementSibling && this.nextElementSibling.classList.contains('form-error') && this.nextElementSibling.textContent.trim() !== '') {
+            this.parentElement.classList.add('error');
+        } else {
+            this.parentElement.classList.remove('error');
+        }
+    });
+});
+
+// Анимация label при фокусе
+document.querySelectorAll('.form-control').forEach(input => {
+    const label = input.previousElementSibling;
+    if (label && label.classList.contains('form-label')) {
+        input.addEventListener('focus', () => {
+            label.style.transform = 'translateY(-5px)';
+            label.style.color = 'var(--primary)';
+        });
+        input.addEventListener('blur', () => {
+            label.style.transform = '';
+            label.style.color = '';
+        });
+    }
+});
+</script>
+</body>
 {% endblock %}

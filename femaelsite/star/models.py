@@ -19,9 +19,9 @@ class recipe(models.Model):
     class Meta: 
         verbose_name = 'Лучшие рецепты'
         verbose_name_plural = 'Лучшие рецепты'
-        ordering = ['time_create']
+        ordering = ['-time_create']
         indexes = [
-            models.Index(fields = ['time_create'])
+            models.Index(fields = ['-time_create'])
         ]
     def get_absolute_url(self):
          return reverse('recipe', kwargs = {'recipe_slug' : self.slug})

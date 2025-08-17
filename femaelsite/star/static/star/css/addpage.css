@@ -24,12 +24,12 @@
 
 .form-control {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 1.4rem 1.7rem;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 1.5rem; 
     transition: border-color 0.3s ease;
-    margin-bottom: 0.5rem;
+    min-height: 3rem;
 }
 
 .form-control:focus {
@@ -51,7 +51,7 @@ textarea.form-control {
 }
 
 .form-row {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.0rem;
 }
 
 .form-submit {
@@ -82,6 +82,34 @@ select.form-control {
     background-position: right 1rem center;
     background-size: 1em;
     padding-right: 2.5rem;
+}
+
+/* Для строкового расположения */
+.inline-row {
+    display: flex;
+    align-items: center; /* Выравнивание по вертикали */
+    gap: 0px; /* Расстояние между label и полем */
+    margin-bottom: 1rem; /* Отступ снизу */
+}
+
+.inline-row .form-label {
+    margin-right: 0px; /* Точный контроль расстояния */
+    margin-bottom: 0;
+    min-width: 120px; /* Фиксированная ширина label */
+    white-space: nowrap; /* Запрет переноса текста */
+}
+
+.inline-row .form-control {
+    padding: 1.2rem 1.5rem;    /* Увеличили padding для inline-полей */
+    font-size: 1.3rem;
+    flex-grow: 1; /* Поле растягивается на доступное пространство */
+    margin-bottom: 0;
+    width: auto; /* Отмена 100% ширины */
+}
+
+.inline-row .form-error {
+    flex-basis: 100%; /* Ошибка на новой строке */
+    margin-top: 0.3rem;
 }
 
 /* Адаптивность */

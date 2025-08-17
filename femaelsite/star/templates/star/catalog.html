@@ -33,7 +33,7 @@
                 <div class="ingredients">
                     <h3>Ингредиенты:</h3>
                     <ul>
-                        {% for ingredient in recipe.ingredients %}
+                        {% for ingredient in recipe.ingredients|slice:":3" %}
                         <li>{{ ingredient }}</li>
                         {% endfor %}
                     </ul>
@@ -41,14 +41,14 @@
                 
                 <div class="recipe-effects">
                     <h3>Эффект:</h3>
-                    <p>{{ recipe.effect }}</p>
+                    <p>{{ recipe.effect|truncatewords:10  }}</p>
                 </div>
             </div>
             
             <div class="recipe-footer">
                 <div class="preparation">
                     <h3>Способ приготовления:</h3>
-                    <p>{{ recipe.preparation }}</p>
+                    <p>{{ recipe.preparation|truncatewords:10 }}</p>
                     <a href="{{ recipe.get_absolute_url }}" class="details-btn">
                         <span>Подробнее</span>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">

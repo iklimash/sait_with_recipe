@@ -1,7 +1,8 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django.views import View
 
 from .forms import AddPostForm
 
@@ -70,7 +71,13 @@ def add_page(request):
     if request.method == "POST":
         form = AddPostForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
+            # print(form.cleaned_data)
+            try:
+                recipe.objects.create(**form.cleaned_data)
+                return redirect('catalog')
+            except:
+                form.add_error(None, "Ошибка добавления рецепта")
+                
     else:
         form = AddPostForm()
 
@@ -80,6 +87,12 @@ def add_page(request):
     }
     return render(request, 'star/addpage.html', data)
 
+class add_page(View):
+    
+    def get(request):
+        pass
+    def post(request):
+        pass
 def login(request):
     pass
 
