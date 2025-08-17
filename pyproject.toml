@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "django-extensions>=3.1.1",
     "ipython>=9.4.0",
+    "django-debug-toolbar>=6.0.0",
 ]
 
 [dependency-groups]

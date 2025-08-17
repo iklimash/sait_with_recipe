@@ -4,19 +4,21 @@ from django.urls import reverse
 
 class recipe(models.Model):
 
-    title = models.CharField(max_length = 255)
-    slug = models.SlugField(max_length = 255, unique = True, db_index = True)
-    game = models.CharField(max_length = 255)
-    ingredients = models.JSONField(default =list, blank = True)
-    effect = models.CharField(max_length = 255)
-    preparation = models.CharField(max_length = 255)
+    title = models.CharField(max_length = 255, verbose_name = 'Название')
+    slug = models.SlugField(max_length = 255, unique = True, db_index = True, verbose_name = 'slug')
+    game = models.CharField(max_length = 255, verbose_name = 'Название игры')
+    ingredients = models.JSONField(default =list, blank = True, verbose_name = 'Ингредиенты')
+    effect = models.CharField(max_length = 255, verbose_name = 'Эффект')
+    preparation = models.CharField(max_length = 255, verbose_name = 'Способы приготовления')
 
-    time_create = models.DateTimeField(auto_now_add = True)
-    time_update = models.DateTimeField(auto_now = True)
+    time_create = models.DateTimeField(auto_now_add = True, verbose_name = 'Время создания')
+    time_update = models.DateTimeField(auto_now = True, verbose_name = 'Время изменение')
 
-    cat = models.ForeignKey('Category', on_delete = models.PROTECT)
+    cat = models.ForeignKey('Category', on_delete = models.PROTECT, verbose_name = 'Категория')
 
     class Meta: 
+        verbose_name = 'Лучшие рецепты'
+        verbose_name_plural = 'Лучшие рецепты'
         ordering = ['time_create']
         indexes = [
             models.Index(fields = ['time_create'])

@@ -19,9 +19,14 @@ from django.urls import path, include
 from star import views
 from star.views import page_not_found
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('star.urls')),
+
 ]
 
 handler404 = page_not_found
+
+admin.site.site_header = 'Панель управления'
+admin.site.index_title = 'Рецепты'
