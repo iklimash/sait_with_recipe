@@ -1,16 +1,41 @@
 from django import forms
-from .models import Category
+from .models import Category, recipe
 
-class AddPostForm(forms.Form):
 
-    title = forms.CharField(widget = forms.Textarea(attrs = {'cols': 60, 'rows': 1}), label = "Заголовок", required = True,
-                             error_messages = {
-                                'required': 'Без заголовка никак ;('
-                            })
-    slug = forms.SlugField(widget = forms.Textarea(attrs = {'cols': 60, 'rows': 1}), label = "URL")
-    game = forms.CharField(widget = forms.Textarea(attrs = {'cols': 60, 'rows': 1}), label = "Игра")
-    ingredients = forms.JSONField(initial = list, widget=forms.Textarea(attrs={'cols': 60, 'rows': 5}), label = "Ингредиетны")
-    effect = forms.CharField(widget = forms.Textarea(attrs = {'cols': 60, 'rows': 1}), label = "Эффект")
-    preparation = forms.CharField(widget = forms.Textarea(attrs = {'cols': 60, 'rows': 5}), label = "Способ приготовления")
-
-    cat = forms.ModelChoiceField(queryset = Category.objects.all(), empty_label = "Не выбрана" ,label = "Категория")
+class AddPostForm(forms.ModelForm):
+    class Meta:
+        model = recipe
+        fields = ['title', 'slug', 'game', 'ingredients', 'effect', 'preparation', 'cat']
+        
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Название рецепта'
+            }),
+            'slug': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Уникальный идентификатор (латинские буквы, цифры, дефисы)'
+            }),
+            'game': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Название игры'
+            }),
+            'ingredients': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Каждый ингредиент с новой строки'
+            }),
+            'effect': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 2,
+                'placeholder': 'Эффект от рецепта'
+            }),
+            'preparation': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Подробное описание приготовления'
+            }),
+            'cat': forms.Select(attrs={
+                'class': 'form-control'
+            })
+        }

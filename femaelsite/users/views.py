@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 
 
@@ -26,4 +26,5 @@ def login_user(request):
     })
 
 def logout_user(request):
-    return HttpResponse('logout')
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))

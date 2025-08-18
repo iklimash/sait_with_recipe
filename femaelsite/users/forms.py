@@ -1,7 +1,5 @@
 
 from django import forms
-
-
 from django import forms
 
 class LoginUserForm(forms.Form):

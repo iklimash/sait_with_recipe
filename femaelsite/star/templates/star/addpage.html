@@ -3,77 +3,210 @@
 
 {% block content %}
 <link type="text/css" href="{% static 'star/css/addpage.css' %}" rel="stylesheet">
-<body>
-<form action="" method="post">
-    {% csrf_token %}
-    <div class="form-container">
-    <h2 class="form-title">Добавить рецепт</h2>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
-        {{ form.title }}
-        <div class="form-error">{{ form.title.errors }}</div>
-    </div>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.slug.id_for_label }}">{{ form.slug.label }}</label>
-        {{ form.slug }}
-        <div class="form-error">{{ form.slug.errors }}</div>
-    </div>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.game.id_for_label }}">{{ form.game.label }}</label>
-        {{ form.game }}
-        <div class="form-error">{{ form.game.errors }}</div>
-    </div>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.ingredients.id_for_label }}">{{ form.ingredients.label }}</label>
-        {{ form.ingredients }}
-        <div class="form-error">{{ form.ingredients.errors }}</div>
-    </div>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.effect.id_for_label }}">{{ form.effect.label }}</label>
-        {{ form.effect }}
-        <div class="form-error">{{ form.effect.errors }}</div>
-    </div>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.preparation.id_for_label }}">
-            <span class="form-hint">Инструкция</span>
-        </label>
-        {{ form.preparation }}
-        <div class="form-error">{{ form.preparation.errors }}</div>
-    </div>
-    <div class="form-row inline-row">
-        <label class="form-label" for="{{ form.cat.id_for_label }}">{{ form.cat.label }}</label>
-        {{ form.cat }}
-        <div class="form-error">{{ form.cat.errors }}</div>
-    </div>
-    <button type="submit" class="form-submit">Отправить</button>
-</div>
-</form>
-<script>
-    // Добавляем классы при ошибках
-document.querySelectorAll('.form-control').forEach(input => {
-    input.addEventListener('blur', function() {
-        if (this.nextElementSibling && this.nextElementSibling.classList.contains('form-error') && this.nextElementSibling.textContent.trim() !== '') {
-            this.parentElement.classList.add('error');
-        } else {
-            this.parentElement.classList.remove('error');
-        }
-    });
-});
 
-// Анимация label при фокусе
-document.querySelectorAll('.form-control').forEach(input => {
-    const label = input.previousElementSibling;
-    if (label && label.classList.contains('form-label')) {
-        input.addEventListener('focus', () => {
-            label.style.transform = 'translateY(-5px)';
-            label.style.color = 'var(--primary)';
-        });
-        input.addEventListener('blur', () => {
-            label.style.transform = '';
-            label.style.color = '';
-        });
+<section class="form-section">
+    <div class="form-container">
+        <h2 class="form-title">Добавить рецепт</h2>
+        
+        <form action="" method="post">
+            {% csrf_token %}
+            
+            <!-- Общие ошибки формы -->
+            {% if form.non_field_errors %}
+            <div class="form-errors">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                <div class="field-error">{{ form.title.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.slug.id_for_label }}">
+                    {{ form.slug.label }}
+                </label>
+                {{ form.slug }}
+                {% if form.slug.errors %}
+                <div class="field-error">{{ form.slug.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.game.id_for_label }}">
+                    {{ form.game.label }}
+                </label>
+                {{ form.game }}
+                {% if form.game.errors %}
+                <div class="field-error">{{ form.game.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.ingredients.id_for_label }}">
+                    {{ form.ingredients.label }}
+                </label>
+                {{ form.ingredients }}
+                {% if form.ingredients.errors %}
+                <div class="field-error">{{ form.ingredients.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.effect.id_for_label }}">
+                    {{ form.effect.label }}
+                </label>
+                {{ form.effect }}
+                {% if form.effect.errors %}
+                <div class="field-error">{{ form.effect.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.preparation.id_for_label }}">
+                    {{ form.preparation.label }}
+                </label>
+                {{ form.preparation }}
+                {% if form.preparation.errors %}
+                <div class="field-error">{{ form.preparation.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-row">
+                <label class="form-label" for="{{ form.cat.id_for_label }}">
+                    {{ form.cat.label }}
+                </label>
+                {{ form.cat }}
+                {% if form.cat.errors %}
+                <div class="field-error">{{ form.cat.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="form-submit-row">
+                <button type="submit" class="form-submit">Отправить</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<style>
+    /* Добавляем стили для формы */
+    .form-section {
+        padding: 40px 20px;
+        min-height: calc(100vh - 200px);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
     }
-});
+    
+    .form-container {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 800px;
+    }
+    
+    .form-title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: var(--primary);
+        font-size: 1.8rem;
+    }
+    
+    .form-row {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--dark);
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: var(--secondary);
+    }
+    
+    textarea.form-control {
+        min-height: 100px;
+        resize: vertical;
+    }
+    
+    .form-submit {
+        padding: 14px 28px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+    }
+    
+    .form-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    }
+    
+    .form-submit-row {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .form-errors {
+        color: var(--danger);
+        background: #ffebee;
+        padding: 12px 15px;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .field-error {
+        color: var(--danger);
+        font-size: 0.85rem;
+        margin-top: 5px;
+    }
+</style>
+
+<script>
+    // Анимация лейблов при фокусе
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            const label = this.previousElementSibling;
+            if (label && label.classList.contains('form-label')) {
+                label.style.transform = 'translateY(-5px)';
+                label.style.color = 'var(--primary)';
+            }
+        });
+        
+        input.addEventListener('blur', function() {
+            const label = this.previousElementSibling;
+            if (label && label.classList.contains('form-label')) {
+                label.style.transform = '';
+                label.style.color = '';
+            }
+        });
+    });
 </script>
-</body>
 {% endblock %}
