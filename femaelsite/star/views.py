@@ -3,16 +3,18 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.views import View
-
+from django.views.generic import TemplateView
 from .forms import AddPostForm
 
 from .models import Category, recipe
 
 
-def index(request):
-    
-    # data_index = { 'title': 'Главная страница'}
-    return render(request, 'star/index.html',  { 'title': 'Главная страница'})
+# def index(request):
+#     return render(request, 'star/index.html',  { 'title': 'Главная страница'})
+
+class indexHome(TemplateView):
+    template_name = 'star/index.html'
+    extra_context = { 'title': 'Главная страница'}
 
 def about(request):
     return render(request, 'star/about.html', { 'title': 'О нас'})
@@ -66,9 +68,17 @@ def all_recipes(request):
         'title': 'Лучшие рецепты'
     })
 
-def add_page(request):
+class add_page(View):
+    
+    def get(self, request):
+        form = AddPostForm()
+        data = {
+        'title': 'Добавление рецепта',
+        'form': form
+        }
+        return render(request, 'star/addpage.html', data)
 
-    if request.method == "POST":
+    def post(self, request):
         form = AddPostForm(request.POST)
         if form.is_valid():
             # print(form.cleaned_data)
@@ -77,22 +87,12 @@ def add_page(request):
                 return redirect('catalog')
             except:
                 form.add_error(None, "Ошибка добавления рецепта")
-                
-    else:
-        form = AddPostForm()
-
-    data = {
+        data = {
         'title': 'Добавление рецепта',
         'form': form
-    }
-    return render(request, 'star/addpage.html', data)
-
-class add_page(View):
+        }
+        return render(request, 'star/addpage.html', data)
     
-    def get(request):
-        pass
-    def post(request):
-        pass
 def login(request):
     pass
 
