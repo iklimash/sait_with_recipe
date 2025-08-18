@@ -2,6 +2,24 @@ from django.db import models
 from django.urls import reverse
 # from django.template.defaultfilters import slugify
 
+
+
+class Category(models.Model):
+
+    name = models.CharField(max_length=255, db_index=True, verbose_name = 'Категория')
+    slug = models.SlugField(max_length=100, unique=True, db_index=True)
+
+    class Meta:
+        verbose_name = 'Категории'
+        verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+         return reverse('category', kwargs = {'cat_slug' : self.slug})
+    
+    
 class recipe(models.Model):
 
     title = models.CharField(max_length = 255, verbose_name = 'Название')
@@ -30,17 +48,4 @@ class recipe(models.Model):
     #     self.slug = slugify(self.title)
     #     return super().save(*args, **kwargs)
     
-class Category(models.Model):
 
-    name = models.CharField(max_length=255, db_index=True, verbose_name = 'Категория')
-    slug = models.SlugField(max_length=100, unique=True, db_index=True)
-
-    class Meta:
-        verbose_name = 'Категории'
-        verbose_name_plural = 'Категории'
-
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-         return reverse('category', kwargs = {'cat_slug' : self.slug})

@@ -14,5 +14,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('recipes/', views.all_recipes, name='all_recipes'),
     path('category/<slug:cat_slug>/', views.show_category, name='category'),
+    path('edit/<int:pk>/', views.UpdatePage.as_view(), name='update'),
 
 ]

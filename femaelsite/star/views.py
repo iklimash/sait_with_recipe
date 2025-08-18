@@ -2,15 +2,12 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from .forms import AddPostForm
-
+from django.core.paginator import Paginator
 from .models import Category, recipe
-
-
-# def index(request):
-#     return render(request, 'star/index.html',  { 'title': 'Главная страница'})
 
 class indexHome(TemplateView):
     template_name = 'star/index.html'
@@ -39,30 +36,42 @@ def show_recipe(request, recipe_slug):
 
 def catalog(request):
     recipes = recipe.objects.all()  
+    paginator = Paginator(recipes, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     categories = Category.objects.all()
     context = {
-        'recipes': recipes,
-        'categories': categories,
+        'page_obj': page_obj,
+        'categories': Category.objects.all(),
         'cat_selected': None,
-        'title': 'Лучшие рецепты'
+        'title': 'Лучшие рецепты',
+        
     }
     return render(request, 'star/catalog.html', context)
 
 def show_category(request, cat_slug):
     category = get_object_or_404(Category, slug=cat_slug)
     recipes = recipe.objects.filter(cat=category)
+    paginator = Paginator(recipes, 6)  
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'recipes': recipes,
         'categories': Category.objects.all(),
         'cat_selected': category.pk,
         'title': f'Рубрика: {category.name}',
+        'page_obj': page_obj
     }
     return render(request, 'star/catalog.html', context)
 
 def all_recipes(request):
     recipes = recipe.objects.all()
+    paginator = Paginator(recipes, 6)  # Добавляем пагинацию
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'star/catalog.html', {
-        'recipes': recipes,
+        'page_obj': page_obj,  
         'categories': Category.objects.all(),
         'cat_selected': None,
         'title': 'Лучшие рецепты'
@@ -93,8 +102,16 @@ class add_page(View):
         }
         return render(request, 'star/addpage.html', data)
     
+class UpdatePage(UpdateView):
+    
+    model = recipe
+    fields = ['title', 'slug', 'game', 'ingredients', 'effect', 'preparation', 'cat']
+    template_name = 'star/addpage.html'
+    success_url = reverse_lazy('home')
+    extra_context = {'title': 'Изменение рецепта'}
+
 def login(request):
-    pass
+    return HttpResponse("<h1>Авторизация</h1>")
 
 def page_not_found(request, exception):
     return HttpResponseNotFound("<h1>Страница не найдена</h1>")

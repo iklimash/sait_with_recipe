@@ -1,9 +1,11 @@
 {% extends 'star/base.html' %}
 {% load static %}
 {% block content %}
+
 <section class="recipes-section">
     <link type="text/css" href="{% static 'star/css/catalog.css' %}" rel="stylesheet">
     
+
     <!-- Добавляем блок с кнопками категорий -->
     <div class="category-filter">
         <div class="category-buttons">
@@ -20,8 +22,9 @@
         </div>
     </div>
     
+    
     <div class="recipes-grid">
-        {% for recipe in recipes %}
+        {% for recipe in page_obj %}
         <div class="recipe-card">
             <div class="recipe-header">
                 <h2>{{ recipe.title }}</h2>
@@ -60,10 +63,56 @@
         </div>
         {% endfor %}
     </div>
+    <div class="pagination">
+        <div class="pagination-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="pagination-link">&laquo; Первая</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link">Предыдущая</a>
+            {% endif %}
+            
+            <span class="current-page">
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+            </span>
+            
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">Следующая</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link">Последняя &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    
 </section>
 
 <style>
-
+    .pagination {
+        margin-top: 40px;
+        text-align: center;
+    }
+    
+    .pagination-links {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .pagination-link {
+        padding: 8px 12px;
+        background: #f3f3f3;
+        border-radius: 4px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .pagination-link:hover {
+        background: #6c5ce7;
+        color: white;
+    }
+    
+    .current-page {
+        padding: 0 15px;
+        font-weight: 500;
+    }
     /* Добавляем стили для кнопок категорий */
     .category-filter {
         margin-bottom: 30px;
