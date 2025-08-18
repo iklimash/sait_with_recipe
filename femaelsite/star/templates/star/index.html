@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
     <link type="text/css" href="{% static 'star/css/index.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'star/css/style.css' %}" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -18,26 +19,26 @@
                 <a href="{% url 'addpage' %}">Добавить рецепт</a>
             </div>
             <div class="auth-container">
-                    {% if user.is_authenticated %}
-                        <span class="username-display">
-                            <i class="fas fa-user-circle auth-icon"></i>
-                            {{user.username }}
-                        </span>
-                        <a href="{% url 'users:logout' %}" class="auth-btn logout-btn">
-                            <i class="fas fa-sign-out-alt auth-icon"></i>
-                            Выйти
-                        </a>
-                    {% else %}
-                        <a href="{% url 'users:login' %}" class="auth-btn login-btn">
-                            <i class="fas fa-sign-in-alt auth-icon"></i>
-                            Войти
-                        </a>
-                        <a href="{% url 'users:register' %}" class="auth-btn register-btn">
-                            <i class="fas fa-user-plus auth-icon"></i>
-                            Регистрация
-                        </a>
-                    {% endif %}
-                </div>
+                {% if user.is_authenticated %}
+                    <span class="nav-links">
+                        <i class="fas fa-user-circle auth-icon"></i>
+                        {{ user.username }}
+                    </span>
+                    <a href="{% url 'users:logout' %}" class="auth-btn logout-btn">
+                        <i class="fas fa-sign-out-alt auth-icon"></i>
+                    Выйти
+                    </a>
+                {% else %}
+                    <a href="{% url 'users:login' %}" class="auth-btn login-btn">
+                        <i class="fas fa-sign-in-alt auth-icon"></i>
+                        Войти
+                    </a>
+                    <a href="{% url 'users:login' %}" class="auth-btn register-btn">
+                        <i class="fas fa-user-plus auth-icon"></i>
+                        Регистрация
+                    </a>
+                {% endif %}
+            </div> 
         </nav>
     <style>
         .auth-container {

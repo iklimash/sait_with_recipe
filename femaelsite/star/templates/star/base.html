@@ -20,20 +20,20 @@
             </div>
             <div class="auth-container">
                     {% if user.is_authenticated %}
-                        <span class="username-display">
+                        <span class="nav-links">
                             <i class="fas fa-user-circle auth-icon"></i>
                             {{ user.username }}
                         </span>
                         <a href="{% url 'users:logout' %}" class="auth-btn logout-btn">
                             <i class="fas fa-sign-out-alt auth-icon"></i>
-                            Выйти
+                        Выйти
                         </a>
                     {% else %}
                         <a href="{% url 'users:login' %}" class="auth-btn login-btn">
                             <i class="fas fa-sign-in-alt auth-icon"></i>
                             Войти
                         </a>
-                        <a href="{% url 'users:register' %}" class="auth-btn register-btn">
+                        <a href="{% url 'users:login' %}" class="auth-btn register-btn">
                             <i class="fas fa-user-plus auth-icon"></i>
                             Регистрация
                         </a>
