@@ -14,7 +14,7 @@ def login_user(request):
             cd = form.cleaned_data
             user = authenticate(request, username = cd['username'], password = cd['password'])
 
-            if user and user.is_active():
+            if user and user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(reverse('home'))
     else:
