@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 # from django.template.defaultfilters import slugify
 
 
@@ -33,6 +34,8 @@ class recipe(models.Model):
     time_update = models.DateTimeField(auto_now = True, verbose_name = 'Время изменение')
 
     cat = models.ForeignKey('Category', on_delete = models.PROTECT, verbose_name = 'Категория')
+
+    author = models.ForeignKey(get_user_model(), on_delete = models.SET_NULL, related_name = 'post', null = True, default = None)
 
     class Meta: 
         verbose_name = 'Лучшие рецепты'

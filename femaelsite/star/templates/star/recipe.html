@@ -9,7 +9,8 @@
     <div class="recipe-card detailed">
         <div class="recipe-header">
             <h1>{{ recipe.title }}</h1>
-            <span class="recipe-game-badge">{{ recipe.game }}</span>
+            <!-- | автор: {{ recipe.author.username|default:'неизвестен'}} -->
+            <span class="recipe-game-badge">{{ recipe.game }} </span>
         </div>
         
         <div class="recipe-content">

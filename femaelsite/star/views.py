@@ -8,11 +8,14 @@ from django.views.generic import TemplateView, UpdateView
 from .forms import AddPostForm
 from django.core.paginator import Paginator
 from .models import Category, recipe
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin 
 
 class indexHome(TemplateView):
     template_name = 'star/index.html'
     extra_context = { 'title': 'Главная страница'}
 
+@login_required
 def about(request):
     return render(request, 'star/about.html', { 'title': 'О нас'})
 
@@ -34,6 +37,7 @@ def show_recipe(request, recipe_slug):
     }
     return render(request, 'star/recipe.html', context)
 
+@login_required
 def catalog(request):
     recipes = recipe.objects.all()  
     paginator = Paginator(recipes, 6)
@@ -49,6 +53,7 @@ def catalog(request):
     }
     return render(request, 'star/catalog.html', context)
 
+@login_required
 def show_category(request, cat_slug):
     category = get_object_or_404(Category, slug=cat_slug)
     recipes = recipe.objects.filter(cat=category)
@@ -64,6 +69,7 @@ def show_category(request, cat_slug):
     }
     return render(request, 'star/catalog.html', context)
 
+@login_required
 def all_recipes(request):
     recipes = recipe.objects.all()
     paginator = Paginator(recipes, 6)  # Добавляем пагинацию
@@ -77,7 +83,13 @@ def all_recipes(request):
         'title': 'Лучшие рецепты'
     })
 
-class add_page(View):
+
+class add_page(LoginRequiredMixin, View):
+    
+    def form_valid(self, form):
+        w = form.save(commit = False)
+        w.author = self.request.user
+        return super().form_valid(form)
     
     def get(self, request):
         form = AddPostForm()
@@ -101,6 +113,7 @@ class add_page(View):
         'form': form
         }
         return render(request, 'star/addpage.html', data)
+    
     
 class UpdatePage(UpdateView):
     
