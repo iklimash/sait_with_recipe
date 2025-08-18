@@ -19,6 +19,7 @@ def login_user(request):
                 return HttpResponseRedirect(reverse('home'))
     else:
         form = LoginUserForm()
+        
     return render(request, 'users/login.html',
                   {
         'form': form,
@@ -27,4 +28,4 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return HttpResponseRedirect(reverse('login'))
+    return HttpResponseRedirect(reverse('users:login'))

@@ -16,9 +16,98 @@
                 <a href="/about/" > О нас </a>
                 <a href="{% url 'catalog' %}">Рецепты</a>
                 <a href="{% url 'addpage' %}">Добавить рецепт</a>
-                <a href="{% url 'users:login' %}"">Авторизация</a>
             </div>
+            <div class="auth-container">
+                    {% if user.is_authenticated %}
+                        <span class="username-display">
+                            <i class="fas fa-user-circle auth-icon"></i>
+                            {{user.username }}
+                        </span>
+                        <a href="{% url 'users:logout' %}" class="auth-btn logout-btn">
+                            <i class="fas fa-sign-out-alt auth-icon"></i>
+                            Выйти
+                        </a>
+                    {% else %}
+                        <a href="{% url 'users:login' %}" class="auth-btn login-btn">
+                            <i class="fas fa-sign-in-alt auth-icon"></i>
+                            Войти
+                        </a>
+                        <a href="{% url 'users:register' %}" class="auth-btn register-btn">
+                            <i class="fas fa-user-plus auth-icon"></i>
+                            Регистрация
+                        </a>
+                    {% endif %}
+                </div>
         </nav>
+    <style>
+        .auth-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .auth-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 10px rgba(108, 92, 231, 0.25);
+        }
+        
+        .register-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logout-btn {
+            background: var(--light);
+            color: var(--dark);
+            padding: 8px 20px 8px 16px;
+        }
+        
+        .username-display {
+            display: inline-flex;
+            align-items: center;     /* Вертикальное выравнивание */
+            justify-content: center; /* Горизонтальное выравнивание */
+            min-width: 100px;        /* Фиксированная минимальная ширина */
+            padding: 6px 15px;
+            background: rgba(108, 92, 231, 0.1);
+            color: var(--primary);
+            border-radius: 30px;
+            font-weight: 500;
+            margin-right: 5px;
+            text-align: center;       /* Дополнительное выравнивание текста */
+            box-sizing: border-box;   /* Учет padding в ширине */
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .login-btn:hover {
+            box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
+        }
+        
+        .auth-icon {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+    </style>
     </header>
 
     <section class="hero">
