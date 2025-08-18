@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.urls import reverse
+
+
+
 from .forms import LoginUserForm
 
 def login_user(request):
@@ -12,6 +15,7 @@ def login_user(request):
             user = authenticate(request, username = cd['username'], password = cd['password'])
 
             if user and user.is_active():
+                login(request, user)
                 return HttpResponseRedirect(reverse('home'))
     else:
         form = LoginUserForm()
