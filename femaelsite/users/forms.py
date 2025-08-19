@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
+from django.urls import reverse_lazy
 from django import forms
 from django import forms
 
@@ -61,3 +62,32 @@ class RegisterUserForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Пароли не совпадают!')
         return cd['password']
+    
+class UserPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'id': 'old_password',
+            'placeholder': 'Ваш пароль'
+        }),
+        required=True
+    )
+    new_password1 = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'id': 'new_password1',
+            'placeholder': 'Введите ваш новый пароль'
+        }),
+        required=True
+    )
+    new_password2 = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'id': 'new_password2',
+            'placeholder': 'Повторите ваш новый пароль'
+        }),
+        required=True
+    )

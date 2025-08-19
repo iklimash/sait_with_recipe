@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from django.urls import reverse
-from django.contrib.auth.models import User
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.views import PasswordChangeView
 
-from .forms import LoginUserForm, RegisterUserForm
+
+from .forms import LoginUserForm, RegisterUserForm, UserPasswordChangeForm
 
 def login_user(request):
     if request.method == 'POST':
@@ -44,3 +45,8 @@ def register(request):
         'form': form,
         'title': 'Регистрация'
     })
+
+class UserPasswordChange(PasswordChangeView):
+    form_class = UserPasswordChangeForm
+    success_url = reverse_lazy("users:password_change_done")
+    template_name = "users/password_change_form.html"

@@ -24,6 +24,10 @@
                         <i class="fas fa-user-circle auth-icon"></i>
                         {{ user.username }}
                     </span>
+                    <a href="{% url 'users:password_change' %}" class="auth-btn logout-btn">
+                        <i class="fas fa-sign-out-alt auth-icon"></i>
+                    Изменить пароль
+                    </a>
                     <a href="{% url 'users:logout' %}" class="auth-btn logout-btn">
                         <i class="fas fa-sign-out-alt auth-icon"></i>
                     Выйти
