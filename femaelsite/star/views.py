@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from .models import Category, recipe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin 
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 class indexHome(TemplateView):
     template_name = 'star/index.html'
@@ -84,7 +85,9 @@ def all_recipes(request):
     })
 
 
-class add_page(LoginRequiredMixin, View):
+class add_page(PermissionRequiredMixin,LoginRequiredMixin, View):
+    
+    permission_required = 'star.add_star'
     
     def form_valid(self, form):
         w = form.save(commit = False)
