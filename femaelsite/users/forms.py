@@ -24,7 +24,7 @@ class LoginUserForm(forms.Form):
         required=True
     )
 
-class RegisterUserForm(UserCreationForm):
+class RegisterUserForm(forms.ModelForm):
     username = forms.CharField(
         label='Имя пользователя',
         widget=forms.TextInput(attrs={
@@ -34,11 +34,11 @@ class RegisterUserForm(UserCreationForm):
         }),
         required=True
     )
-    password1 = forms.CharField(
+    password = forms.CharField(
         label='Пароль',
         widget=forms.PasswordInput(attrs={
             'class': 'form-input',
-            'id': 'password1',
+            'id': 'password',
             'placeholder': 'Введите ваш пароль'
         }),
         required=True
@@ -54,10 +54,10 @@ class RegisterUserForm(UserCreationForm):
     )
     class Meta:
         model = get_user_model()
-        fields = ['username', 'password1', 'password2']
+        fields = ['username', 'password', 'password2']
 
     def clean_password2(self):
         cd = self.cleaned_data
-        if cd['password1'] != cd['password2']:
+        if cd['password'] != cd['password2']:
             raise forms.ValidationError('Пароли не совпадают!')
         return cd['password']
